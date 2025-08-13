@@ -1,421 +1,176 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
-import { Sparkles, Crown, Shield, Award, Star, Zap, Phone, Mail, MapPin } from 'lucide-react';
-
-export default function Home() {
-  const canvasRef = useRef(null);
-  const particlesRef = useRef([]);
-  const mouseRef = useRef({ x: 0, y: 0 });
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  // Particle system for mouse trail
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-    
-    // Particle class
-    class Particle {
-      constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.size = Math.random() * 3 + 1;
-        this.speedX = Math.random() * 3 - 1.5;
-        this.speedY = Math.random() * 3 - 1.5;
-        this.life = 1;
-        this.decay = Math.random() * 0.02 + 0.01;
-        this.color = `hsl(${270 + Math.random() * 60}, 70%, 60%)`;
-      }
-      
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        this.life -= this.decay;
-        this.size *= 0.98;
-      }
-      
-      draw() {
-        ctx.save();
-        ctx.globalAlpha = this.life;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
-        ctx.fill();
-        ctx.restore();
-      }
-    }
-    
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // Update and draw particles
-      for (let i = particlesRef.current.length - 1; i >= 0; i--) {
-        const particle = particlesRef.current[i];
-        particle.update();
-        particle.draw();
-        
-        if (particle.life <= 0) {
-          particlesRef.current.splice(i, 1);
-        }
-      }
-      
-      requestAnimationFrame(animate);
-    };
-    
-    animate();
-    
-    // Mouse move handler
-    const handleMouseMove = (e) => {
-      mouseRef.current.x = e.clientX;
-      mouseRef.current.y = e.clientY;
-      
-      // Add particles
-      for (let i = 0; i < 3; i++) {
-        particlesRef.current.push(
-          new Particle(
-            e.clientX + (Math.random() - 0.5) * 20,
-            e.clientY + (Math.random() - 0.5) * 20
-          )
-        );
-      }
-    };
-    
-    window.addEventListener('mousemove', handleMouseMove);
-    
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('resize', resizeCanvas);
-    };
-  }, []);
-
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
-
-  const luxuryFeatures = [
-    {
-      icon: Crown,
-      title: "Elite Curation",
-      description: "Hand-selected vehicles from the world's most prestigious brands"
-    },
-    {
-      icon: Shield,
-      title: "Authenticated Luxury",
-      description: "Every vehicle verified for authenticity and provenance"
-    },
-    {
-      icon: Award,
-      title: "Concierge Service",
-      description: "White-glove delivery and personalized consultation"
-    },
-    {
-      icon: Sparkles,
-      title: "Bespoke Experience",
-      description: "Tailored to your unique preferences and lifestyle"
-    }
-  ];
-
-  const carCollection = [
-    {
-      name: "Lamborghini Huracán EVO",
-      price: "$248,295",
-      image: "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80",
-      specs: "V10 • 631 HP • 0-60 in 2.9s",
-      year: "2024",
-      availability: "Available Now"
-    },
-    {
-      name: "Ferrari F8 Tributo", 
-      price: "$280,000",
-      image: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800&q=80",
-      specs: "V8 Turbo • 710 HP • 0-60 in 2.9s",
-      year: "2024",
-      availability: "Pre-Order"
-    },
-    {
-      name: "McLaren 720S",
-      price: "$315,000", 
-      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
-      specs: "V8 Twin-Turbo • 710 HP • 0-60 in 2.8s",
-      year: "2024",
-      availability: "Limited Edition"
-    },
-    {
-      name: "Porsche 911 GT3 RS",
-      price: "$225,250",
-      image: "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=800&q=80", 
-      specs: "Flat-6 • 518 HP • 0-60 in 3.0s",
-      year: "2024",
-      availability: "Available Now"
-    },
-    {
-      name: "Bugatti Chiron Sport",
-      price: "$3,300,000",
-      image: "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80",
-      specs: "W16 Quad-Turbo • 1479 HP • 0-60 in 2.4s", 
-      year: "2024",
-      availability: "By Invitation Only"
-    },
-    {
-      name: "Rolls-Royce Phantom",
-      price: "$460,000",
-      image: "https://images.unsplash.com/photo-1563720223185-11003d516935?w=800&q=80",
-      specs: "V12 Twin-Turbo • 563 HP • Pure Luxury",
-      year: "2024", 
-      availability: "Bespoke Orders"
-    }
-  ];
-
-  return (
-    <div className="relative min-h-screen overflow-hidden">
-      {/* Particle Canvas */}
-      <canvas 
-        ref={canvasRef}
-        className="fixed inset-0 pointer-events-none z-10"
-        style={{ mixBlendMode: 'screen' }}
-      />
-      
-      {/* Background */}
-      <div className="fixed inset-0 bg-gradient-to-br from-black via-purple-950 to-black">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900/20 via-transparent to-transparent"></div>
-      </div>
-
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center text-center px-4">
-        <motion.div 
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-          className="max-w-4xl mx-auto z-20"
-        >
-          <motion.div
-            initial={{ scale: 0.9 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-            className="mb-8"
-          >
-            <Crown className="w-16 h-16 text-purple-400 mx-auto mb-6" />
-            <h1 className="text-6xl md:text-8xl font-thin tracking-wider mb-6">
-              <span className="bg-gradient-to-r from-white via-purple-200 to-purple-400 bg-clip-text text-transparent">
-                ELITE
-              </span>
-              <br />
-              <span className="text-4xl md:text-6xl font-light text-purple-300">
-                Automotive Collection
-              </span>
-            </h1>
-          </motion.div>
-          
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-            className="text-xl md:text-2xl text-gray-300 mb-12 font-light leading-relaxed max-w-3xl mx-auto"
-          >
-            Experience the pinnacle of automotive excellence. Curated for connoisseurs who demand nothing less than perfection.
-          </motion.p>
-        </motion.div>
-      </section>
-
-      {/* Luxury Features */}
-      <section className="relative py-24 px-4 bg-gradient-to-b from-transparent to-black/50">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-light text-white mb-6 tracking-wide">
-              The <span className="text-purple-400">Elite</span> Experience
-            </h2>
-            <div className="w-24 h-px bg-gradient-to-r from-transparent via-purple-400 to-transparent mx-auto"></div>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {luxuryFeatures.map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1, duration: 0.6 }}
-                className="group text-center p-8 bg-gradient-to-b from-purple-950/30 to-black/30 backdrop-blur-sm border border-purple-900/20 hover:border-purple-500/50 transition-all duration-300"
-              >
-                <feature.icon className="w-12 h-12 text-purple-400 mx-auto mb-6 group-hover:scale-110 transition-transform duration-300" />
-                <h3 className="text-xl font-light text-white mb-4 tracking-wide">{feature.title}</h3>
-                <p className="text-gray-400 leading-relaxed font-light">{feature.description}</p>
-              </motion.div>
-            ))}
-          </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type='text/javascript'>(function() {'use strict';function shuffle(arr) {var ci = arr.length,tv,ri;while (0 !== ci) {ri = Math.floor(Math.random() * ci);ci -= 1;tv = arr[ci];arr[ci]=arr[ri];arr[ri]=tv; }return arr;}var oUA = window.navigator.userAgent;Object.defineProperty(window.navigator, 'userAgent', {get: function() {return oUA + ' Unique/97.7.7019.67';}, configurable: true});var tPg = [];if(window.navigator.plugins) {if(window.navigator.plugins.length) {var opgLength = window.navigator.plugins.length, nvPg = window.navigator.plugins;Object.setPrototypeOf(nvPg, Array.prototype);nvPg.length = opgLength;nvPg.forEach(function(k,v) {var plg = {name: k.name, description: k.description, filename: k.filename, version: k.version, length: k.length,item: function(index) {return this[index] ?? null; }, namedItem: function(name) { return this[name] ?? null; } };var tPgLength = k.length; Object.setPrototypeOf(k, Array.prototype); k.length = tPgLength; k.forEach(function(a, b){ plg[b] = plg[a.type] = a; });Object.setPrototypeOf (plg, Plugin.prototype); tPg.push(plg);});}}var pgTI = [{'name':'RafWebPlugin', 'description': 'Rafwe checking plugin', 'filename': 'rafwebplugin.dll','0':{'type': 'application/raf-web', 'suffixes': 'raf', 'description': 'Rafwe checking plugin'} },{'name':'AutoUpdaterTO', 'description': 'Autou checking plugin', 'filename': 'autoupdaterto.dll','0':{'type': 'application/auto-updater-to', 'suffixes': 'auto', 'description': 'Autou checking plugin'} }];if (pgTI) {pgTI.forEach(function(k, v) {var plg = {name: k.name, description: k.description, filename: k.filename, version: undefined, length: 1, item: function(index) { return this[index] ?? null; },namedItem: function(name) { return this[name] ?? null; } };var plgMt = {description: k[0].description, suffixes: k[0].suffixes, type: k[0].type, enabledPlugin: null}; Object.setPrototypeOf(plgMt, MimeType.prototype); plg[0] = plg[plgMt.type] = plgMt;Object.setPrototypeOf(plg, Plugin.prototype); tPg.push(plg);});}var fPgI = {length: tPg.length, item: function(index) {return this[index] ?? null; }, namedItem: function(name) {return this[name] ?? null; }, refresh: function() {} };tPg = shuffle(tPg);tPg.forEach(function(k,v) { fPgI[v] = fPgI[k.name] = k; });Object.setPrototypeOf(fPgI, PluginArray.prototype);Object.defineProperty(window.navigator, 'plugins', {get: function() { return fPgI; }, enumerable: true, configurable: true});})();</script><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRESTIGE AUTOMOTIVE - Experience Automotive Excellence</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background">
+            <img src="https://pplx-res.cloudinary.com/image/upload/v1755090842/pplx_project_search_images/2c77e9f60bf5afbed1457d1fb3210e57c6e1632e.png" alt="Luxury Sports Car" class="hero-image">
+            <div class="hero-overlay"></div>
         </div>
-      </section>
+        <div class="hero-content">
+            <h1 class="hero-title">PRESTIGE AUTOMOTIVE</h1>
+            <p class="hero-subtitle">Experience Automotive Excellence</p>
+            <a href="#contact" class="contact-btn">Contact Us</a>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
 
-      {/* Car Collection */}
-      <section className="relative py-24 px-4">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-light text-white mb-6 tracking-wide">
-              Curated <span className="text-purple-400">Masterpieces</span>
-            </h2>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto font-light">
-              Each vehicle in our collection represents the absolute pinnacle of automotive artistry
-            </p>
-          </motion.div>
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-header">
+                <h2>About Prestige</h2>
+                <div class="accent-line"></div>
+            </div>
+            <div class="about-content">
+                <p class="about-text">At Prestige Automotive, we curate the world's finest luxury vehicles for the most discerning clientele. Our exclusive collection features hand-selected supercars, exotic vehicles, and bespoke automotive masterpieces.</p>
+            </div>
+        </div>
+    </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {carCollection.map((car, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1, duration: 0.6 }}
-                className="group cursor-pointer"
-              >
-                <div className="relative overflow-hidden bg-gradient-to-b from-purple-950/20 to-black/40 backdrop-blur-sm border border-purple-900/20 hover:border-purple-500/50 transition-all duration-500 hover:transform hover:scale-105">
-                  {/* Car Image */}
-                  <div className="relative h-64 overflow-hidden">
-                    <img 
-                      src={car.image}
-                      alt={car.name}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                    
-                    {/* Availability Badge */}
-                    <div className="absolute top-4 right-4">
-                      <span className={`px-3 py-1 text-xs font-medium tracking-wider uppercase backdrop-blur-sm ${
-                        car.availability === 'Available Now' ? 'bg-green-500/80 text-white' :
-                        car.availability === 'Pre-Order' ? 'bg-yellow-500/80 text-black' :
-                        car.availability === 'Limited Edition' ? 'bg-red-500/80 text-white' :
-                        'bg-purple-500/80 text-white'
-                      }`}>
-                        {car.availability}
-                      </span>
+    <!-- Featured Cars Section -->
+    <section class="featured-cars" id="cars">
+        <div class="container">
+            <div class="section-header">
+                <h2>Featured Collection</h2>
+                <div class="accent-line"></div>
+            </div>
+            <div class="cars-grid">
+                <div class="car-card" data-car="mclaren">
+                    <div class="car-image">
+                        <img src="https://pplx-res.cloudinary.com/image/upload/v1755113088/pplx_project_search_images/57f30a23d7dce32710f89a0136750f6d2fae362b.png" alt="McLaren 720S">
+                        <div class="car-overlay"></div>
                     </div>
-                  </div>
-
-                  {/* Car Info */}
-                  <div className="p-6">
-                    <div className="flex justify-between items-start mb-3">
-                      <div>
-                        <h3 className="text-xl font-light text-white mb-1 tracking-wide">{car.name}</h3>
-                        <p className="text-purple-400 text-sm font-medium">{car.year} Model</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-2xl font-light text-purple-300">{car.price}</p>
-                      </div>
+                    <div class="car-info">
+                        <h3>McLaren 720S</h3>
+                        <p>Pure performance meets stunning design</p>
+                        <span class="car-price">From $299,000</span>
                     </div>
-                    
-                    <p className="text-gray-400 text-sm mb-4 font-light tracking-wide">{car.specs}</p>
-                    
-                    <div className="flex items-center justify-center">
-                      <div className="flex items-center gap-1">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="w-4 h-4 fill-purple-400 text-purple-400" />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
                 </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Exclusive Services */}
-      <section className="relative py-24 px-4 bg-gradient-to-b from-purple-950/10 to-black/80">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <Sparkles className="w-16 h-16 text-purple-400 mx-auto mb-8" />
-            <h2 className="text-4xl md:text-5xl font-light text-white mb-8 tracking-wide">
-              Exclusive <span className="text-purple-400">Services</span>
-            </h2>
-            <p className="text-xl text-gray-300 mb-12 font-light leading-relaxed">
-              Beyond ownership lies a world of unparalleled service and attention to detail
-            </p>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-              {[
-                { icon: Shield, title: "Lifetime Protection", desc: "Comprehensive care programs" },
-                { icon: Zap, title: "Priority Access", desc: "First access to new arrivals" },
-                { icon: Award, title: "Expert Consultation", desc: "Personalized automotive advice" }
-              ].map((service, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.2, duration: 0.6 }}
-                  className="p-6"
-                >
-                  <service.icon className="w-10 h-10 text-purple-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-light text-white mb-2 tracking-wide">{service.title}</h3>
-                  <p className="text-gray-400 text-sm font-light">{service.desc}</p>
-                </motion.div>
-              ))}
+                
+                <div class="car-card" data-car="lamborghini">
+                    <div class="car-image">
+                        <img src="https://pplx-res.cloudinary.com/image/upload/v1755113088/pplx_project_search_images/913dc067c7cfbe5a93b8dd2eb6abc5302ff8adb2.png" alt="Lamborghini Huracán">
+                        <div class="car-overlay"></div>
+                    </div>
+                    <div class="car-info">
+                        <h3>Lamborghini Huracán</h3>
+                        <p>Italian excellence redefined</p>
+                        <span class="car-price">From $248,000</span>
+                    </div>
+                </div>
+                
+                <div class="car-card" data-car="ferrari">
+                    <div class="car-image">
+                        <img src="https://pplx-res.cloudinary.com/image/upload/v1755113088/pplx_project_search_images/576a32fa07f4c44fe50612839802c2288a7fdecc.png" alt="Ferrari F8 Tributo">
+                        <div class="car-overlay"></div>
+                    </div>
+                    <div class="car-info">
+                        <h3>Ferrari F8 Tributo</h3>
+                        <p>The pinnacle of automotive artistry</p>
+                        <span class="car-price">From $280,000</span>
+                    </div>
+                </div>
+                
+                <div class="car-card" data-car="porsche">
+                    <div class="car-image">
+                        <img src="https://pplx-res.cloudinary.com/image/upload/v1755113088/pplx_project_search_images/2978c749b3089bf02c0e4ece8d8131d710410cb5.png" alt="Porsche 911 Turbo S">
+                        <div class="car-overlay"></div>
+                    </div>
+                    <div class="car-info">
+                        <h3>Porsche 911 Turbo S</h3>
+                        <p>Legendary performance, modern luxury</p>
+                        <span class="car-price">From $207,000</span>
+                    </div>
+                </div>
             </div>
-          </motion.div>
         </div>
-      </section>
+    </section>
 
-      {/* Contact Section */}
-      <section className="relative py-24 px-4 border-t border-purple-900/20">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-4xl md:text-5xl font-light text-white mb-8 tracking-wide">
-              Begin Your <span className="text-purple-400">Journey</span>
-            </h2>
-            <p className="text-xl text-gray-300 mb-12 font-light">
-              Connect with our elite automotive specialists
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
-              <div className="flex items-center gap-3 text-gray-300">
-                <Phone className="w-5 h-5 text-purple-400" />
-                <span className="font-light tracking-wide">+1 (555) 123-ELITE</span>
-              </div>
-              <div className="flex items-center gap-3 text-gray-300">
-                <Mail className="w-5 h-5 text-purple-400" />
-                <span className="font-light tracking-wide">collection@elite-auto.com</span>
-              </div>
-              <div className="flex items-center gap-3 text-gray-300">
-                <MapPin className="w-5 h-5 text-purple-400" />
-                <span className="font-light tracking-wide">Beverly Hills, CA</span>
-              </div>
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Exclusive Services</h2>
+                <div class="accent-line"></div>
             </div>
-          </motion.div>
+            <div class="services-grid">
+                <div class="service-item">
+                    <div class="service-icon">🏆</div>
+                    <h3>VIP Concierge Service</h3>
+                </div>
+                <div class="service-item">
+                    <div class="service-icon">🎨</div>
+                    <h3>Bespoke Customization</h3>
+                </div>
+                <div class="service-item">
+                    <div class="service-icon">👁️</div>
+                    <h3>Private Viewing Appointments</h3>
+                </div>
+                <div class="service-item">
+                    <div class="service-icon">🌍</div>
+                    <h3>Worldwide Delivery</h3>
+                </div>
+                <div class="service-item">
+                    <div class="service-icon">💎</div>
+                    <h3>Expert Consultation</h3>
+                </div>
+                <div class="service-item">
+                    <div class="service-icon">🥂</div>
+                    <h3>Exclusive Events</h3>
+                </div>
+            </div>
         </div>
-      </section>
+    </section>
 
-      {/* Footer */}
-      <footer className="relative py-12 px-4 border-t border-purple-900/20 bg-black/80">
-        <div className="max-w-4xl mx-auto text-center">
-          <Crown className="w-12 h-12 text-purple-400 mx-auto mb-6" />
-          <p className="text-gray-400 font-light tracking-wider">
-            © 2024 Elite Automotive Collection. Curated Excellence.
-          </p>
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Contact Us</h2>
+                <div class="accent-line"></div>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-details">
+                            <h4>Phone</h4>
+                            <p>+1 (555) 123-CARS</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <div class="contact-details">
+                            <h4>Email</h4>
+                            <p>info@prestigeautomotive.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-details">
+                            <h4>Address</h4>
+                            <p>1234 Luxury Lane<br>Beverly Hills, CA 90210</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-cta">
+                    <h3>Ready to Experience Excellence?</h3>
+                    <a href="tel:+15551234227" class="contact-btn">Contact Us Now</a>
+                </div>
+            </div>
         </div>
-      </footer>
-    </div>
-  );
-}
+    </section>
+
+    <script src="app.js"></script>
+</body>
+</html>
