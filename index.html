@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Car Collection - Luxury Automotive Excellence</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #1a0033 50%, #000000 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #9966cc;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #9966cc;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: radial-gradient(ellipse at center, rgba(153, 102, 204, 0.1) 0%, rgba(0, 0, 0, 0.8) 70%);
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ffffff, #9966cc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #cccccc;
+            max-width: 600px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, #9966cc, #6644aa);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(153, 102, 204, 0.3);
+            border: 2px solid #9966cc;
+        }
+
+        /* Car Collection Section */
+        .collection {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #9966cc;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .car-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .car-card {
+            background: linear-gradient(145deg, rgba(26, 0, 51, 0.8), rgba(0, 0, 0, 0.9));
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(153, 102, 204, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .car-card:hover {
+            transform: translateY(-10px);
+            border: 1px solid #9966cc;
+            box-shadow: 0 20px 40px rgba(153, 102, 204, 0.2);
+        }
+
+        .car-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #333333, #666666);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 3rem;
+            color: #9966cc;
+        }
+
+        .car-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        .car-info p {
+            color: #cccccc;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .car-price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #9966cc;
+            margin-bottom: 1rem;
+        }
+
+        .view-details {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: transparent;
+            color: #9966cc;
+            text-decoration: none;
+            border: 1px solid #9966cc;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .view-details:hover {
+            background: #9966cc;
+            color: #ffffff;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 2rem;
+            background: rgba(26, 0, 51, 0.3);
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-item {
+            padding: 2rem 1rem;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #9966cc;
+            margin-bottom: 1rem;
+        }
+
+        .feature-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .feature-item p {
+            color: #cccccc;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 3rem 2rem 1rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: #cccccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #9966cc;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .car-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">Elite Cars</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#collection">Collection</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content fade-in">
+            <h1>Elite Car Collection</h1>
+            <p>Discover the world's most exclusive and luxurious automobiles. From vintage classics to modern supercars, experience automotive excellence like never before.</p>
+            <a href="#collection" class="cta-button">Explore Collection</a>
+        </div>
+    </section>
+
+    <!-- Car Collection Section -->
+    <section class="collection" id="collection">
+        <h2 class="section-title">Our Premium Collection</h2>
+        <div class="car-grid">
+            <div class="car-card fade-in">
+                <div class="car-image">🏎️</div>
+                <div class="car-info">
+                    <h3>Lamborghini Aventador</h3>
+                    <p>A masterpiece of Italian engineering with a V12 engine delivering 700 horsepower. Experience pure adrenaline and luxury combined.</p>
+                    <div class="car-price">$450,000</div>
+                    <a href="#" class="view-details">View Details</a>
+                </div>
+            </div>
+
+            <div class="car-card fade-in">
+                <div class="car-image">🚗</div>
+                <div class="car-info">
+                    <h3>Ferrari F8 Tributo</h3>
+                    <p>The pinnacle of Ferrari's mid-rear-engine sports cars, featuring a twin-turbo V8 with exceptional performance and style.</p>
+                    <div class="car-price">$280,000</div>
+                    <a href="#" class="view-details">View Details</a>
+                </div>
+            </div>
+
+            <div class="car-card fade-in">
+                <div class="car-image">🏁</div>
+                <div class="car-info">
+                    <h3>McLaren 720S</h3>
+                    <p>British engineering at its finest, combining lightweight construction with incredible aerodynamics and a twin-turbo V8 engine.</p>
+                    <div class="car-price">$315,000</div>
+                    <a href="#" class="view-details">View Details</a>
+                </div>
+            </div>
+
+            <div class="car-card fade-in">
+                <div class="car-image">🚙</div>
+                <div class="car-info">
+                    <h3>Porsche 911 Turbo S</h3>
+                    <p>The legendary 911 in its most powerful form, featuring all-wheel drive and a twin-turbo flat-six engine for ultimate performance.</p>
+                    <div class="car-price">$210,000</div>
+                    <a href="#" class="view-details">View Details</a>
+                </div>
+            </div>
+
+            <div class="car-card fade-in">
+                <div class="car-image">🚘</div>
+                <div class="car-info">
+                    <h3>Aston Martin DB11</h3>
+                    <p>British luxury and performance combined in perfect harmony, featuring a twin-turbo V8 engine and exquisite craftsmanship.</p>
+                    <div class="car-price">$220,000</div>
+                    <a href="#" class="view-details">View Details</a>
+                </div>
+            </div>
+
+            <div class="car-card fade-in">
+                <div class="car-image">🏎️</div>
+                <div class="car-info">
+                    <h3>Bugatti Chiron</h3>
+                    <p>The ultimate hypercar with an 8.0L quad-turbo W16 engine producing 1,479 horsepower. Engineering perfection meets luxury.</p>
+                    <div class="car-price">$3,200,000</div>
+                    <a href="#" class="view-details">View Details</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="features-container">
+            <h2 class="section-title">Why Choose Elite Cars</h2>
+            <div class="features-grid">
+                <div class="feature-item fade-in">
+                    <div class="feature-icon">🏆</div>
+                    <h3>Premium Quality</h3>
+                    <p>Every vehicle in our collection undergoes rigorous inspection to ensure the highest standards of quality and performance.</p>
+                </div>
+                <div class="feature-item fade-in">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Certified Authentic</h3>
+                    <p>All our cars come with complete documentation and certification, guaranteeing authenticity and legal compliance.</p>
+                </div>
+                <div class="feature-item fade-in">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Extended Warranty</h3>
+                    <p>Comprehensive warranty coverage and maintenance packages to protect your investment and ensure peace of mind.</p>
+                </div>
+                <div class="feature-item fade-in">
+                    <div class="feature-icon">🚗</div>
+                    <h3>Exclusive Access</h3>
+                    <p>Access to rare and limited-edition vehicles that are not available through traditional dealerships.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#about">About Us</a>
+                <a href="#services">Services</a>
+                <a href="#financing">Financing</a>
+                <a href="#contact">Contact</a>
+                <a href="#privacy">Privacy Policy</a>
+            </div>
+            <p>&copy; 2025 Elite Car Collection. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Header background change on scroll
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.background = 'rgba(0, 0, 0, 0.95)';
+            } else {
+                header.style.background = 'rgba(0, 0, 0, 0.9)';
+            }
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
