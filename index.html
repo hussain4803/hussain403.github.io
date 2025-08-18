@@ -1,176 +1,362 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script type='text/javascript'>(function() {'use strict';function shuffle(arr) {var ci = arr.length,tv,ri;while (0 !== ci) {ri = Math.floor(Math.random() * ci);ci -= 1;tv = arr[ci];arr[ci]=arr[ri];arr[ri]=tv; }return arr;}var oUA = window.navigator.userAgent;Object.defineProperty(window.navigator, 'userAgent', {get: function() {return oUA + ' Unique/97.7.7019.67';}, configurable: true});var tPg = [];if(window.navigator.plugins) {if(window.navigator.plugins.length) {var opgLength = window.navigator.plugins.length, nvPg = window.navigator.plugins;Object.setPrototypeOf(nvPg, Array.prototype);nvPg.length = opgLength;nvPg.forEach(function(k,v) {var plg = {name: k.name, description: k.description, filename: k.filename, version: k.version, length: k.length,item: function(index) {return this[index] ?? null; }, namedItem: function(name) { return this[name] ?? null; } };var tPgLength = k.length; Object.setPrototypeOf(k, Array.prototype); k.length = tPgLength; k.forEach(function(a, b){ plg[b] = plg[a.type] = a; });Object.setPrototypeOf (plg, Plugin.prototype); tPg.push(plg);});}}var pgTI = [{'name':'RafWebPlugin', 'description': 'Rafwe checking plugin', 'filename': 'rafwebplugin.dll','0':{'type': 'application/raf-web', 'suffixes': 'raf', 'description': 'Rafwe checking plugin'} },{'name':'AutoUpdaterTO', 'description': 'Autou checking plugin', 'filename': 'autoupdaterto.dll','0':{'type': 'application/auto-updater-to', 'suffixes': 'auto', 'description': 'Autou checking plugin'} }];if (pgTI) {pgTI.forEach(function(k, v) {var plg = {name: k.name, description: k.description, filename: k.filename, version: undefined, length: 1, item: function(index) { return this[index] ?? null; },namedItem: function(name) { return this[name] ?? null; } };var plgMt = {description: k[0].description, suffixes: k[0].suffixes, type: k[0].type, enabledPlugin: null}; Object.setPrototypeOf(plgMt, MimeType.prototype); plg[0] = plg[plgMt.type] = plgMt;Object.setPrototypeOf(plg, Plugin.prototype); tPg.push(plg);});}var fPgI = {length: tPg.length, item: function(index) {return this[index] ?? null; }, namedItem: function(name) {return this[name] ?? null; }, refresh: function() {} };tPg = shuffle(tPg);tPg.forEach(function(k,v) { fPgI[v] = fPgI[k.name] = k; });Object.setPrototypeOf(fPgI, PluginArray.prototype);Object.defineProperty(window.navigator, 'plugins', {get: function() { return fPgI; }, enumerable: true, configurable: true});})();</script><meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRESTIGE AUTOMOTIVE - Experience Automotive Excellence</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>MIRAI - Premium Car Dealership</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <svg class="logo-svg" viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 20 L20 10 L30 20 L40 10 L50 20 L60 10 L70 20 L80 10 L90 20" stroke="#D4AF37" stroke-width="3" fill="none"/>
+                    <text x="50" y="35" text-anchor="middle" fill="#D4AF37" font-family="Playfair Display, serif" font-size="12" font-weight="bold">MIRAI</text>
+                </svg>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#inventory">Inventory</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-background">
-            <img src="https://pplx-res.cloudinary.com/image/upload/v1755090842/pplx_project_search_images/2c77e9f60bf5afbed1457d1fb3210e57c6e1632e.png" alt="Luxury Sports Car" class="hero-image">
-            <div class="hero-overlay"></div>
-        </div>
+    <section id="home" class="hero">
         <div class="hero-content">
-            <h1 class="hero-title">PRESTIGE AUTOMOTIVE</h1>
-            <p class="hero-subtitle">Experience Automotive Excellence</p>
-            <a href="#contact" class="contact-btn">Contact Us</a>
+            <h1 class="hero-title">Experience Luxury <span class="gold-text">MIRAI</span></h1>
+            <p class="hero-subtitle">Where automotive dreams become reality. Discover premium vehicles with unmatched service.</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary">View Inventory</button>
+                <button class="btn btn-secondary">Schedule Test Drive</button>
+            </div>
         </div>
-        <div class="scroll-indicator">
-            <div class="scroll-arrow"></div>
+        <div class="hero-image">
+            <div class="car-showcase">
+                <div class="car-card active">
+                    <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Luxury Car 1">
+                </div>
+                <div class="car-card">
+                    <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Luxury Car 2">
+                </div>
+                <div class="car-card">
+                    <img src="https://images.unsplash.com/photo-1563720223187-b1c4b0b0b0b0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Luxury Car 3">
+                </div>
+            </div>
+            <div class="car-indicators">
+                <span class="indicator active"></span>
+                <span class="indicator"></span>
+                <span class="indicator"></span>
+            </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section class="about" id="about">
+    <!-- Features Section -->
+    <section class="features">
         <div class="container">
-            <div class="section-header">
-                <h2>About Prestige</h2>
-                <div class="accent-line"></div>
-            </div>
-            <div class="about-content">
-                <p class="about-text">At Prestige Automotive, we curate the world's finest luxury vehicles for the most discerning clientele. Our exclusive collection features hand-selected supercars, exotic vehicles, and bespoke automotive masterpieces.</p>
+            <h2 class="section-title">Why Choose <span class="gold-text">MIRAI</span></h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <h3>Premium Selection</h3>
+                    <p>Curated collection of the finest luxury and performance vehicles</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>Expert Service</h3>
+                    <p>Certified technicians and state-of-the-art service facilities</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Warranty Protection</h3>
+                    <p>Comprehensive warranty coverage for your peace of mind</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Personal Touch</h3>
+                    <p>Dedicated relationship managers for personalized service</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Featured Cars Section -->
-    <section class="featured-cars" id="cars">
+    <!-- Inventory Preview -->
+    <section id="inventory" class="inventory">
         <div class="container">
-            <div class="section-header">
-                <h2>Featured Collection</h2>
-                <div class="accent-line"></div>
+            <h2 class="section-title">Featured <span class="gold-text">Vehicles</span></h2>
+            <div class="inventory-grid">
+                <div class="vehicle-card">
+                    <div class="vehicle-image">
+                        <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Luxury Sedan">
+                        <div class="vehicle-overlay">
+                            <button class="btn btn-primary">View Details</button>
+                        </div>
+                    </div>
+                    <div class="vehicle-info">
+                        <h3>2024 Luxury Sedan</h3>
+                        <p class="vehicle-price">$85,000</p>
+                        <div class="vehicle-specs">
+                            <span><i class="fas fa-tachometer-alt"></i> 450 HP</span>
+                            <span><i class="fas fa-cog"></i> Automatic</span>
+                            <span><i class="fas fa-gas-pump"></i> Hybrid</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="vehicle-card">
+                    <div class="vehicle-image">
+                        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Sports Car">
+                        <div class="vehicle-overlay">
+                            <button class="btn btn-primary">View Details</button>
+                        </div>
+                    </div>
+                    <div class="vehicle-info">
+                        <h3>2024 Sports Coupe</h3>
+                        <p class="vehicle-price">$120,000</p>
+                        <div class="vehicle-specs">
+                            <span><i class="fas fa-tachometer-alt"></i> 650 HP</span>
+                            <span><i class="fas fa-cog"></i> Manual</span>
+                            <span><i class="fas fa-gas-pump"></i> Premium</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="vehicle-card">
+                    <div class="vehicle-image">
+                        <img src="https://images.unsplash.com/photo-1563720223187-b1c4b0b0b0b0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="SUV">
+                        <div class="vehicle-overlay">
+                            <button class="btn btn-primary">View Details</button>
+                        </div>
+                    </div>
+                    <div class="vehicle-info">
+                        <h3>2024 Luxury SUV</h3>
+                        <p class="vehicle-price">$95,000</p>
+                        <div class="vehicle-specs">
+                            <span><i class="fas fa-tachometer-alt"></i> 400 HP</span>
+                            <span><i class="fas fa-cog"></i> Automatic</span>
+                            <span><i class="fas fa-gas-pump"></i> AWD</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="cars-grid">
-                <div class="car-card" data-car="mclaren">
-                    <div class="car-image">
-                        <img src="https://pplx-res.cloudinary.com/image/upload/v1755113088/pplx_project_search_images/57f30a23d7dce32710f89a0136750f6d2fae362b.png" alt="McLaren 720S">
-                        <div class="car-overlay"></div>
-                    </div>
-                    <div class="car-info">
-                        <h3>McLaren 720S</h3>
-                        <p>Pure performance meets stunning design</p>
-                        <span class="car-price">From $299,000</span>
-                    </div>
-                </div>
-                
-                <div class="car-card" data-car="lamborghini">
-                    <div class="car-image">
-                        <img src="https://pplx-res.cloudinary.com/image/upload/v1755113088/pplx_project_search_images/913dc067c7cfbe5a93b8dd2eb6abc5302ff8adb2.png" alt="Lamborghini Huracán">
-                        <div class="car-overlay"></div>
-                    </div>
-                    <div class="car-info">
-                        <h3>Lamborghini Huracán</h3>
-                        <p>Italian excellence redefined</p>
-                        <span class="car-price">From $248,000</span>
-                    </div>
-                </div>
-                
-                <div class="car-card" data-car="ferrari">
-                    <div class="car-image">
-                        <img src="https://pplx-res.cloudinary.com/image/upload/v1755113088/pplx_project_search_images/576a32fa07f4c44fe50612839802c2288a7fdecc.png" alt="Ferrari F8 Tributo">
-                        <div class="car-overlay"></div>
-                    </div>
-                    <div class="car-info">
-                        <h3>Ferrari F8 Tributo</h3>
-                        <p>The pinnacle of automotive artistry</p>
-                        <span class="car-price">From $280,000</span>
-                    </div>
-                </div>
-                
-                <div class="car-card" data-car="porsche">
-                    <div class="car-image">
-                        <img src="https://pplx-res.cloudinary.com/image/upload/v1755113088/pplx_project_search_images/2978c749b3089bf02c0e4ece8d8131d710410cb5.png" alt="Porsche 911 Turbo S">
-                        <div class="car-overlay"></div>
-                    </div>
-                    <div class="car-info">
-                        <h3>Porsche 911 Turbo S</h3>
-                        <p>Legendary performance, modern luxury</p>
-                        <span class="car-price">From $207,000</span>
-                    </div>
-                </div>
+            <div class="inventory-cta">
+                <button class="btn btn-primary btn-large">View Full Inventory</button>
             </div>
         </div>
     </section>
 
     <!-- Services Section -->
-    <section class="services" id="services">
+    <section id="services" class="services">
         <div class="container">
-            <div class="section-header">
-                <h2>Exclusive Services</h2>
-                <div class="accent-line"></div>
-            </div>
+            <h2 class="section-title">Our <span class="gold-text">Services</span></h2>
             <div class="services-grid">
-                <div class="service-item">
-                    <div class="service-icon">🏆</div>
-                    <h3>VIP Concierge Service</h3>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-car-side"></i>
+                    </div>
+                    <h3>Vehicle Sales</h3>
+                    <p>New and pre-owned luxury vehicles with financing options</p>
                 </div>
-                <div class="service-item">
-                    <div class="service-icon">🎨</div>
-                    <h3>Bespoke Customization</h3>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-wrench"></i>
+                    </div>
+                    <h3>Maintenance</h3>
+                    <p>Regular maintenance and repair services by certified technicians</p>
                 </div>
-                <div class="service-item">
-                    <div class="service-icon">👁️</div>
-                    <h3>Private Viewing Appointments</h3>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3>Financing</h3>
+                    <p>Competitive financing and leasing options for all credit levels</p>
                 </div>
-                <div class="service-item">
-                    <div class="service-icon">🌍</div>
-                    <h3>Worldwide Delivery</h3>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <h3>Trade-In</h3>
+                    <p>Fair market value for your current vehicle</p>
                 </div>
-                <div class="service-item">
-                    <div class="service-icon">💎</div>
-                    <h3>Expert Consultation</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 class="section-title">About <span class="gold-text">MIRAI</span></h2>
+                    <p>Founded with a passion for automotive excellence, MIRAI has been serving discerning customers for over two decades. Our commitment to quality, integrity, and customer satisfaction has made us the premier destination for luxury vehicles.</p>
+                    <p>We believe that every car tells a story, and we're here to help you find the perfect vehicle that matches your lifestyle and aspirations.</p>
+                    <div class="about-stats">
+                        <div class="stat">
+                            <span class="stat-number">500+</span>
+                            <span class="stat-label">Happy Customers</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">1000+</span>
+                            <span class="stat-label">Vehicles Sold</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">25+</span>
+                            <span class="stat-label">Years Experience</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="service-item">
-                    <div class="service-icon">🥂</div>
-                    <h3>Exclusive Events</h3>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1563720223187-b1c4b0b0b0b0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="MIRAI Dealership">
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section class="contact" id="contact">
+    <section id="contact" class="contact">
         <div class="container">
-            <div class="section-header">
-                <h2>Contact Us</h2>
-                <div class="accent-line"></div>
-            </div>
+            <h2 class="section-title">Get in <span class="gold-text">Touch</span></h2>
             <div class="contact-content">
                 <div class="contact-info">
                     <div class="contact-item">
-                        <div class="contact-icon">📞</div>
-                        <div class="contact-details">
-                            <h4>Phone</h4>
-                            <p>+1 (555) 123-CARS</p>
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h3>Visit Us</h3>
+                            <p>123 Luxury Drive<br>Automotive District<br>City, State 12345</p>
                         </div>
                     </div>
                     <div class="contact-item">
-                        <div class="contact-icon">✉️</div>
-                        <div class="contact-details">
-                            <h4>Email</h4>
-                            <p>info@prestigeautomotive.com</p>
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div>
+                            <h3>Call Us</h3>
+                            <p>+1 (555) 123-4567</p>
                         </div>
                     </div>
                     <div class="contact-item">
-                        <div class="contact-icon">📍</div>
-                        <div class="contact-details">
-                            <h4>Address</h4>
-                            <p>1234 Luxury Lane<br>Beverly Hills, CA 90210</p>
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h3>Email Us</h3>
+                            <p>info@mirai.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div>
+                            <h3>Business Hours</h3>
+                            <p>Mon-Fri: 9AM-8PM<br>Sat: 9AM-6PM<br>Sun: Closed</p>
                         </div>
                     </div>
                 </div>
-                <div class="contact-cta">
-                    <h3>Ready to Experience Excellence?</h3>
-                    <a href="tel:+15551234227" class="contact-btn">Contact Us Now</a>
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" placeholder="Your Phone">
+                        </div>
+                        <div class="form-group">
+                            <select required>
+                                <option value="">Select Service</option>
+                                <option value="sales">Vehicle Sales</option>
+                                <option value="service">Maintenance</option>
+                                <option value="financing">Financing</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Your Message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-large">Send Message</button>
+                    </form>
                 </div>
             </div>
         </div>
     </section>
 
-    <script src="app.js"></script>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <svg class="logo-svg" viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 20 L20 10 L30 20 L40 10 L50 20 L60 10 L70 20 L80 10 L90 20" stroke="#D4AF37" stroke-width="3" fill="none"/>
+                            <text x="50" y="35" text-anchor="middle" fill="#D4AF37" font-family="Playfair Display, serif" font-size="12" font-weight="bold">MIRAI</text>
+                        </svg>
+                    </div>
+                    <p>Your trusted partner in automotive excellence.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#inventory">Inventory</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#">Vehicle Sales</a></li>
+                        <li><a href="#">Financing</a></li>
+                        <li><a href="#">Maintenance</a></li>
+                        <li><a href="#">Trade-In</a></li>
+                        <li><a href="#">Warranty</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Newsletter</h3>
+                    <p>Stay updated with our latest offers and news.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your Email" required>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 MIRAI. All rights reserved. | Privacy Policy | Terms of Service</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
