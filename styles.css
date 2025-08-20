@@ -297,24 +297,6 @@ body {
     line-height: 1.4;
 }
 
-.service-cta {
-    background: linear-gradient(135deg, #00d4ff, #0099cc);
-    color: #000000;
-    border: none;
-    padding: 15px 30px;
-    border-radius: 25px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 1rem;
-    width: 100%;
-}
-
-.service-cta:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3);
-}
-
 /* Brands Section */
 .brands {
     padding: 100px 0;
@@ -450,6 +432,17 @@ body {
     color: #888888;
     font-size: 0.9rem;
     margin: 0;
+}
+
+.whatsapp-link {
+    color: #00d4ff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.whatsapp-link:hover {
+    color: #00ffff;
+    text-decoration: underline;
 }
 
 /* Responsive Design */
