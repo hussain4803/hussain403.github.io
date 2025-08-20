@@ -1,33 +1,66 @@
 // DOM Content Loaded
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize all functionality
+    initLanguageSwitcher();
     initNavigation();
-    initCarousel();
     initScrollEffects();
     initFormHandling();
+    initModals();
     initAnimations();
     initSmoothScrolling();
 });
 
-// Navigation functionality
-function initNavigation() {
-    const hamburger = document.querySelector('.hamburger');
-    const navMenu = document.querySelector('.nav-menu');
-    const navbar = document.querySelector('.navbar');
-
-    // Mobile menu toggle
-    hamburger.addEventListener('click', function() {
-        hamburger.classList.toggle('active');
-        navMenu.classList.toggle('active');
-    });
-
-    // Close mobile menu when clicking on a link
-    document.querySelectorAll('.nav-menu a').forEach(link => {
-        link.addEventListener('click', () => {
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
+// Language Switcher
+function initLanguageSwitcher() {
+    const langBtns = document.querySelectorAll('.lang-btn');
+    const currentLang = localStorage.getItem('preferred-language') || 'en';
+    
+    // Set initial language
+    setLanguage(currentLang);
+    
+    langBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const lang = this.getAttribute('data-lang');
+            setLanguage(lang);
+            
+            // Update active button
+            langBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Store preference
+            localStorage.setItem('preferred-language', lang);
         });
     });
+}
+
+function setLanguage(lang) {
+    // Update all elements with data attributes
+    document.querySelectorAll('[data-en], [data-ar], [data-ja]').forEach(element => {
+        const text = element.getAttribute(`data-${lang}`);
+        if (text) {
+            element.textContent = text;
+        }
+    });
+    
+    // Update document direction for Arabic
+    if (lang === 'ar') {
+        document.body.setAttribute('data-lang', 'ar');
+    } else {
+        document.body.removeAttribute('data-lang');
+    }
+    
+    // Update active language button
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('data-lang') === lang) {
+            btn.classList.add('active');
+        }
+    });
+}
+
+// Navigation functionality
+function initNavigation() {
+    const navbar = document.querySelector('.navbar');
 
     // Navbar background on scroll
     window.addEventListener('scroll', function() {
@@ -39,40 +72,6 @@ function initNavigation() {
             navbar.style.boxShadow = 'none';
         }
     });
-}
-
-// Carousel functionality
-function initCarousel() {
-    const carCards = document.querySelectorAll('.car-card');
-    const indicators = document.querySelectorAll('.indicator');
-    let currentIndex = 0;
-
-    // Auto-rotate carousel
-    function nextSlide() {
-        carCards[currentIndex].classList.remove('active');
-        indicators[currentIndex].classList.remove('active');
-        
-        currentIndex = (currentIndex + 1) % carCards.length;
-        
-        carCards[currentIndex].classList.add('active');
-        indicators[currentIndex].classList.add('active');
-    }
-
-    // Manual navigation with indicators
-    indicators.forEach((indicator, index) => {
-        indicator.addEventListener('click', () => {
-            carCards[currentIndex].classList.remove('active');
-            indicators[currentIndex].classList.remove('active');
-            
-            currentIndex = index;
-            
-            carCards[currentIndex].classList.add('active');
-            indicators[currentIndex].classList.add('active');
-        });
-    });
-
-    // Auto-rotate every 5 seconds
-    setInterval(nextSlide, 5000);
 }
 
 // Scroll effects and animations
@@ -91,27 +90,37 @@ function initScrollEffects() {
     }, observerOptions);
 
     // Observe elements for animation
-    document.querySelectorAll('.feature-card, .vehicle-card, .service-card, .about-content, .contact-content').forEach(el => {
+    document.querySelectorAll('.service-card, .testimonial, .comparison-item').forEach(el => {
         observer.observe(el);
     });
 }
 
 // Form handling
 function initFormHandling() {
-    const contactForm = document.querySelector('.contact-form form');
-    const newsletterForm = document.querySelector('.newsletter-form');
+    const quickForm = document.getElementById('quickForm');
+    const quoteForm = document.getElementById('quoteForm');
+    const consultationForm = document.getElementById('consultationForm');
 
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
+    if (quickForm) {
+        quickForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            handleFormSubmission(this, 'Contact form submitted successfully!');
+            handleFormSubmission(this, 'Quote request sent successfully!');
         });
     }
 
-    if (newsletterForm) {
-        newsletterForm.addEventListener('submit', function(e) {
+    if (quoteForm) {
+        quoteForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            handleFormSubmission(this, 'Newsletter subscription successful!');
+            handleFormSubmission(this, 'Quote request sent successfully!');
+            closeModal('quoteModal');
+        });
+    }
+
+    if (consultationForm) {
+        consultationForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleFormSubmission(this, 'Consultation booked successfully!');
+            closeModal('consultationModal');
         });
     }
 }
@@ -136,6 +145,67 @@ function handleFormSubmission(form, successMessage) {
         submitBtn.textContent = originalText;
         submitBtn.disabled = false;
     }, 1500);
+}
+
+// Modal functionality
+function initModals() {
+    // Close modals when clicking on X
+    document.querySelectorAll('.close').forEach(closeBtn => {
+        closeBtn.addEventListener('click', function() {
+            const modal = this.closest('.modal');
+            closeModal(modal.id);
+        });
+    });
+
+    // Close modals when clicking outside
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal(this.id);
+            }
+        });
+    });
+
+    // Close modals with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            const openModal = document.querySelector('.modal[style*="display: block"]');
+            if (openModal) {
+                closeModal(openModal.id);
+            }
+        }
+    });
+}
+
+function showQuoteForm() {
+    const modal = document.getElementById('quoteModal');
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+function showConsultationForm() {
+    const modal = document.getElementById('consultationModal');
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+function showServiceForm(serviceType) {
+    // Pre-fill the service selection in the quote form
+    const modal = document.getElementById('quoteModal');
+    const serviceSelect = modal.querySelector('select');
+    
+    if (serviceSelect) {
+        serviceSelect.value = serviceType;
+    }
+    
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
 }
 
 // Notification system
@@ -180,7 +250,7 @@ function showNotification(message, type = 'info') {
 // Animation system
 function initAnimations() {
     // Add animation classes to elements
-    document.querySelectorAll('.feature-card, .vehicle-card, .service-card').forEach((card, index) => {
+    document.querySelectorAll('.service-card, .testimonial, .comparison-item').forEach((card, index) => {
         card.style.animationDelay = `${index * 0.1}s`;
         card.classList.add('animate-on-scroll');
     });
@@ -203,236 +273,119 @@ function initSmoothScrolling() {
     });
 }
 
-// Parallax effect for hero section
-function initParallax() {
-    window.addEventListener('scroll', function() {
-        const scrolled = window.pageYOffset;
-        const parallaxElements = document.querySelectorAll('.hero::before');
-        
-        parallaxElements.forEach(element => {
-            const speed = 0.5;
-            element.style.transform = `translateY(${scrolled * speed}px)`;
-        });
-    });
-}
-
-// Vehicle card interactions
-function initVehicleInteractions() {
-    document.querySelectorAll('.vehicle-card').forEach(card => {
-        const overlay = card.querySelector('.vehicle-overlay');
-        const viewBtn = overlay.querySelector('.btn');
-        
-        // Add click event to view details button
-        viewBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            const vehicleName = card.querySelector('h3').textContent;
-            showNotification(`Viewing details for ${vehicleName}`, 'info');
-        });
-        
-        // Add hover effects
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-15px) scale(1.02)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
-        });
-    });
-}
-
-// Statistics counter animation
-function initStatsCounter() {
-    const stats = document.querySelectorAll('.stat-number');
+// Service-specific form handling
+function handleServiceForm(serviceType) {
+    const currentLang = localStorage.getItem('preferred-language') || 'en';
+    let serviceName = '';
     
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const target = entry.target;
-                const finalValue = parseInt(target.textContent);
-                animateCounter(target, 0, finalValue, 2000);
-                observer.unobserve(target);
-            }
-        });
-    });
-    
-    stats.forEach(stat => observer.observe(stat));
-}
-
-function animateCounter(element, start, end, duration) {
-    const startTime = performance.now();
-    const increment = (end - start) / (duration / 16);
-    let current = start;
-    
-    function updateCounter(currentTime) {
-        const elapsed = currentTime - startTime;
-        
-        if (elapsed < duration) {
-            current += increment;
-            element.textContent = Math.floor(current) + '+';
-            requestAnimationFrame(updateCounter);
-        } else {
-            element.textContent = end + '+';
-        }
+    switch(serviceType) {
+        case 'new-car':
+            serviceName = currentLang === 'ar' ? 'سيارة جديدة' : 
+                         currentLang === 'ja' ? '新車' : 'New Car';
+            break;
+        case 'used-car':
+            serviceName = currentLang === 'ar' ? 'سيارة مستعملة' : 
+                         currentLang === 'ja' ? '中古車' : 'Used Car';
+            break;
+        case 'financing':
+            serviceName = currentLang === 'ar' ? 'التمويل' : 
+                         currentLang === 'ja' ? '資金調達' : 'Financing';
+            break;
+        case 'maintenance':
+            serviceName = currentLang === 'ar' ? 'الصيانة' : 
+                         currentLang === 'ja' ? 'メンテナンス' : 'Maintenance';
+            break;
     }
     
-    requestAnimationFrame(updateCounter);
+    showServiceForm(serviceType);
+    
+    // Show notification
+    const message = currentLang === 'ar' ? `تم فتح نموذج ${serviceName}` :
+                   currentLang === 'ja' ? `${serviceName}フォームを開きました` :
+                   `Opened ${serviceName} form`;
+    showNotification(message, 'info');
 }
 
-// Search functionality for inventory
-function initInventorySearch() {
-    const searchInput = document.createElement('input');
-    searchInput.type = 'text';
-    searchInput.placeholder = 'Search vehicles...';
-    searchInput.className = 'inventory-search';
-    
-    // Style the search input
-    Object.assign(searchInput.style, {
-        width: '100%',
-        maxWidth: '400px',
-        padding: '15px 20px',
-        borderRadius: '25px',
-        border: '2px solid var(--accent-black)',
-        background: 'var(--secondary-black)',
-        color: 'var(--text-white)',
-        fontSize: '1rem',
-        marginBottom: '2rem'
-    });
-    
-    // Insert search input before inventory grid
-    const inventorySection = document.querySelector('.inventory .container');
-    const inventoryTitle = inventorySection.querySelector('.section-title');
-    inventorySection.insertBefore(searchInput, inventoryTitle.nextSibling);
-    
-    // Search functionality
-    searchInput.addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase();
-        const vehicleCards = document.querySelectorAll('.vehicle-card');
-        
-        vehicleCards.forEach(card => {
-            const vehicleName = card.querySelector('h3').textContent.toLowerCase();
-            const vehicleSpecs = card.querySelector('.vehicle-specs').textContent.toLowerCase();
-            
-            if (vehicleName.includes(searchTerm) || vehicleSpecs.includes(searchTerm)) {
-                card.style.display = 'block';
-                card.style.animation = 'fadeIn 0.5s ease';
-            } else {
-                card.style.display = 'none';
-            }
-        });
-    });
+// WhatsApp integration
+function openWhatsApp(phone, message = '') {
+    const whatsappUrl = `https://wa.me/${phone.replace(/\D/g, '')}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
 }
 
-// Test drive scheduling modal
-function initTestDriveModal() {
-    const testDriveBtn = document.querySelector('.btn-secondary');
+// SMS integration
+function openSMS(phone, message = '') {
+    const smsUrl = `sms:${phone}?body=${encodeURIComponent(message)}`;
+    window.open(smsUrl);
+}
+
+// Email integration
+function openEmail(email, subject = '', body = '') {
+    const mailtoUrl = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.open(mailtoUrl);
+}
+
+// Contact action handlers
+function contactViaWhatsApp(phone, name = '') {
+    const currentLang = localStorage.getItem('preferred-language') || 'en';
+    let message = '';
     
-    if (testDriveBtn) {
-        testDriveBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            showTestDriveModal();
-        });
+    if (currentLang === 'ar') {
+        message = `مرحباً، أنا ${name} وأود الاستفسار عن خدمات MIRAI للسيارات.`;
+    } else if (currentLang === 'ja') {
+        message = `こんにちは、私は${name}で、MIRAIの自動車サービスについてお問い合わせしたいです。`;
+    } else {
+        message = `Hello, I'm ${name} and I'd like to inquire about MIRAI's automotive services.`;
     }
+    
+    openWhatsApp(phone, message);
 }
 
-function showTestDriveModal() {
-    const modal = document.createElement('div');
-    modal.className = 'modal-overlay';
-    modal.innerHTML = `
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Schedule Test Drive</h3>
-                <button class="modal-close">&times;</button>
-            </div>
-            <form class="test-drive-form">
-                <div class="form-group">
-                    <input type="text" placeholder="Your Name" required>
-                </div>
-                <div class="form-group">
-                    <input type="email" placeholder="Your Email" required>
-                </div>
-                <div class="form-group">
-                    <input type="tel" placeholder="Your Phone" required>
-                </div>
-                <div class="form-group">
-                    <select required>
-                        <option value="">Select Vehicle</option>
-                        <option value="sedan">Luxury Sedan</option>
-                        <option value="sports">Sports Coupe</option>
-                        <option value="suv">Luxury SUV</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <input type="date" required>
-                </div>
-                <div class="form-group">
-                    <input type="time" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Schedule Test Drive</button>
-            </form>
-        </div>
-    `;
+function contactViaSMS(phone, name = '') {
+    const currentLang = localStorage.getItem('preferred-language') || 'en';
+    let message = '';
     
-    // Style the modal
-    Object.assign(modal.style, {
-        position: 'fixed',
-        top: '0',
-        left: '0',
-        width: '100%',
-        height: '100%',
-        background: 'rgba(0, 0, 0, 0.8)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        zIndex: '10000',
-        opacity: '0',
-        transition: 'opacity 0.3s ease'
-    });
+    if (currentLang === 'ar') {
+        message = `مرحباً، أنا ${name} وأود الاستفسار عن خدمات MIRAI للسيارات.`;
+    } else if (currentLang === 'ja') {
+        message = `こんにちは、私は${name}で、MIRAIの自動車サービスについてお問い合わせしたいです。`;
+    } else {
+        message = `Hello, I'm ${name} and I'd like to inquire about MIRAI's automotive services.`;
+    }
     
-    document.body.appendChild(modal);
+    openSMS(phone, message);
+}
+
+function contactViaEmail(name = '') {
+    const currentLang = localStorage.getItem('preferred-language') || 'en';
+    let subject = '';
+    let body = '';
     
-    // Animate in
-    setTimeout(() => {
-        modal.style.opacity = '1';
-    }, 100);
+    if (currentLang === 'ar') {
+        subject = 'استفسار عن خدمات MIRAI للسيارات';
+        body = `مرحباً،\n\nأنا ${name} وأود الاستفسار عن خدماتكم.\n\nشكراً لكم.`;
+    } else if (currentLang === 'ja') {
+        subject = 'MIRAI自動車サービスについてのお問い合わせ';
+        body = `こんにちは、\n\n私は${name}で、あなたのサービスについてお問い合わせしたいです。\n\nありがとうございます。`;
+    } else {
+        subject = 'Inquiry about MIRAI Automotive Services';
+        body = `Hello,\n\nI'm ${name} and I'd like to inquire about your services.\n\nThank you.`;
+    }
     
-    // Close modal functionality
-    const closeBtn = modal.querySelector('.modal-close');
-    closeBtn.addEventListener('click', () => {
-        modal.style.opacity = '0';
-        setTimeout(() => {
-            document.body.removeChild(modal);
-        }, 300);
-    });
-    
-    // Close on outside click
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.style.opacity = '0';
-            setTimeout(() => {
-                document.body.removeChild(modal);
-            }, 300);
-        }
-    });
-    
-    // Form submission
-    const form = modal.querySelector('.test-drive-form');
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        showNotification('Test drive scheduled successfully!', 'success');
-        modal.style.opacity = '0';
-        setTimeout(() => {
-            document.body.removeChild(modal);
-        }, 300);
+    openEmail('miraiboeki@gmail.com', subject, body);
+}
+
+// Performance optimization
+function optimizeImages() {
+    const images = document.querySelectorAll('img');
+    images.forEach(img => {
+        img.loading = 'lazy';
+        img.decoding = 'async';
     });
 }
 
-// Initialize additional features
+// Initialize performance optimizations
 document.addEventListener('DOMContentLoaded', function() {
-    initVehicleInteractions();
-    initStatsCounter();
-    initInventorySearch();
-    initTestDriveModal();
-    initParallax();
+    optimizeImages();
 });
 
 // Add CSS for additional features
@@ -448,82 +401,30 @@ const additionalStyles = `
         transform: translateY(0);
     }
     
-    .modal-overlay {
-        backdrop-filter: blur(10px);
+    .notification {
+        font-family: inherit;
     }
     
-    .modal-content {
-        background: var(--accent-black);
-        border-radius: 20px;
-        padding: 2rem;
-        max-width: 500px;
-        width: 90%;
-        border: 2px solid var(--primary-gold);
-        box-shadow: var(--shadow-gold);
+    /* RTL specific adjustments */
+    [data-lang="ar"] .service-card {
+        text-align: right;
     }
     
-    .modal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 2rem;
-        border-bottom: 1px solid var(--primary-gold);
-        padding-bottom: 1rem;
+    [data-lang="ar"] .service-header {
+        text-align: center;
     }
     
-    .modal-close {
-        background: none;
-        border: none;
-        color: var(--primary-gold);
-        font-size: 2rem;
-        cursor: pointer;
-        padding: 0;
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        transition: var(--transition);
+    [data-lang="ar"] .service-cta {
+        text-align: center;
     }
     
-    .modal-close:hover {
-        background: var(--primary-gold);
-        color: var(--text-dark);
+    /* Japanese specific adjustments */
+    [data-lang="ja"] .service-card {
+        line-height: 1.8;
     }
     
-    .test-drive-form .form-group {
-        margin-bottom: 1.5rem;
-    }
-    
-    .test-drive-form input,
-    .test-drive-form select {
-        width: 100%;
-        padding: 1rem;
-        background: var(--secondary-black);
-        border: 1px solid var(--accent-black);
-        border-radius: 10px;
-        color: var(--text-white);
-        font-size: 1rem;
-        transition: var(--transition);
-    }
-    
-    .test-drive-form input:focus,
-    .test-drive-form select:focus {
-        outline: none;
-        border-color: var(--primary-gold);
-        box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
-    }
-    
-    .inventory-search:focus {
-        outline: none;
-        border-color: var(--primary-gold);
-        box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
-    }
-    
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
+    [data-lang="ja"] .hero-title {
+        line-height: 1.3;
     }
 `;
 
