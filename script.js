@@ -90,23 +90,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Pricing CTA button functionality
-    document.querySelectorAll('.pricing-cta').forEach(button => {
-        button.addEventListener('click', function() {
-            const packageName = this.closest('.pricing-card').querySelector('h3').textContent;
-            const contactInfo = document.querySelector('.contact-info');
-            
-            // Scroll to contact section
-            contactInfo.scrollIntoView({ behavior: 'smooth' });
-            
-            // Highlight the contact section briefly
-            contactInfo.style.animation = 'pulse 0.5s ease-in-out';
-            setTimeout(() => {
-                contactInfo.style.animation = '';
-            }, 500);
-        });
-    });
-    
     // Intersection Observer for animations
     const observerOptions = {
         threshold: 0.1,
@@ -123,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, observerOptions);
     
     // Observe all animated elements
-    document.querySelectorAll('.service-card, .comparison-item, .brand-item, .pricing-card, .contact-item').forEach(el => {
+    document.querySelectorAll('.service-card, .brand-item, .contact-item').forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(30px)';
         el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
@@ -301,21 +284,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         card.addEventListener('mouseleave', function() {
             this.style.transform = 'translateY(0) scale(1)';
-        });
-    });
-    
-    // Add pricing card hover effects
-    document.querySelectorAll('.pricing-card').forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            if (!this.classList.contains('featured')) {
-                this.style.transform = 'translateY(-10px) scale(1.02)';
-            }
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            if (!this.classList.contains('featured')) {
-                this.style.transform = 'translateY(0) scale(1)';
-            }
         });
     });
     

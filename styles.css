@@ -65,6 +65,7 @@ body {
     background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
     position: relative;
     overflow: hidden;
+    flex-direction: column;
 }
 
 .hero::before {
@@ -78,15 +79,43 @@ body {
     opacity: 0.5;
 }
 
+/* Logo Styling */
+.logo {
+    margin-bottom: 30px;
+    z-index: 10;
+    position: relative;
+}
+
+.logo-text {
+    font-size: clamp(4rem, 8vw, 8rem);
+    font-weight: 800;
+    color: #ffffff;
+    text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+    letter-spacing: 0.1em;
+}
+
+.tire {
+    color: #00d4ff;
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.8);
+    animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
 .hero-title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 700;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 600;
     margin-bottom: 20px;
     background: linear-gradient(135deg, #ffffff 0%, #00d4ff 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     line-height: 1.2;
+    z-index: 10;
+    position: relative;
 }
 
 .hero-subtitle {
@@ -95,6 +124,8 @@ body {
     max-width: 600px;
     margin: 0 auto;
     font-weight: 300;
+    z-index: 10;
+    position: relative;
 }
 
 /* Section Titles */
@@ -227,44 +258,6 @@ body {
     box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3);
 }
 
-/* Comparison Section */
-.comparison {
-    padding: 100px 0;
-    background: #2d2d2d;
-}
-
-.comparison-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 40px;
-    margin-top: 50px;
-}
-
-.comparison-item {
-    background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
-    border: 1px solid #444444;
-    border-radius: 15px;
-    padding: 30px;
-    transition: all 0.3s ease;
-}
-
-.comparison-item:hover {
-    border-color: #00d4ff;
-    transform: translateY(-5px);
-}
-
-.comparison-item h3 {
-    color: #00d4ff;
-    font-size: 1.3rem;
-    margin-bottom: 15px;
-    font-weight: 600;
-}
-
-.comparison-item p {
-    color: #cccccc;
-    line-height: 1.6;
-}
-
 /* Brands Section */
 .brands {
     padding: 100px 0;
@@ -316,109 +309,6 @@ body {
     color: #ffffff;
     font-size: 1.1rem;
     font-weight: 500;
-}
-
-/* Pricing Section */
-.pricing {
-    padding: 100px 0;
-    background: #2d2d2d;
-}
-
-.pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    margin-top: 50px;
-}
-
-.pricing-card {
-    background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
-    border: 1px solid #444444;
-    border-radius: 20px;
-    padding: 40px 30px;
-    text-align: center;
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.pricing-card.featured {
-    border-color: #00d4ff;
-    transform: scale(1.05);
-    box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
-}
-
-.pricing-card:hover {
-    transform: translateY(-10px);
-    border-color: #00d4ff;
-}
-
-.pricing-card h3 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 20px;
-    color: #ffffff;
-}
-
-.price {
-    margin-bottom: 30px;
-}
-
-.currency {
-    font-size: 1.5rem;
-    color: #00d4ff;
-    font-weight: 600;
-}
-
-.amount {
-    font-size: 3rem;
-    font-weight: 700;
-    color: #ffffff;
-    margin: 0 5px;
-}
-
-.period {
-    color: #cccccc;
-    font-size: 1rem;
-}
-
-.pricing-card ul {
-    list-style: none;
-    margin-bottom: 30px;
-    text-align: left;
-}
-
-.pricing-card li {
-    color: #cccccc;
-    padding: 8px 0;
-    border-bottom: 1px solid #444444;
-    position: relative;
-    padding-left: 25px;
-}
-
-.pricing-card li::before {
-    content: '✓';
-    position: absolute;
-    left: 0;
-    color: #00d4ff;
-    font-weight: bold;
-}
-
-.pricing-cta {
-    background: linear-gradient(135deg, #00d4ff, #0099cc);
-    color: #000000;
-    border: none;
-    padding: 15px 30px;
-    border-radius: 25px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 1rem;
-    width: 100%;
-}
-
-.pricing-cta:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3);
 }
 
 /* Trust & Contact Section */
@@ -488,6 +378,44 @@ body {
     font-size: 1rem;
 }
 
+/* Footer */
+.footer {
+    background: #0f0f0f;
+    padding: 30px 0;
+    border-top: 1px solid #333333;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.footer-main p {
+    color: #cccccc;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.footer-rights p {
+    color: #888888;
+    font-size: 0.8rem;
+    margin: 0;
+}
+
+.whatsapp-link {
+    color: #00d4ff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.whatsapp-link:hover {
+    color: #00ffff;
+    text-decoration: underline;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {
@@ -498,16 +426,8 @@ body {
         grid-template-columns: 1fr;
     }
     
-    .comparison-grid {
-        grid-template-columns: 1fr;
-    }
-    
     .brand-grid {
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    }
-    
-    .pricing-grid {
-        grid-template-columns: 1fr;
     }
     
     .contact-grid {
@@ -520,17 +440,21 @@ body {
     }
     
     .hero-title {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
     
     .hero-subtitle {
         font-size: 1.1rem;
     }
+    
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
 }
 
 @media (max-width: 480px) {
-    .service-card,
-    .pricing-card {
+    .service-card {
         padding: 25px 20px;
     }
     
@@ -539,7 +463,11 @@ body {
     }
     
     .hero-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
+    }
+    
+    .logo-text {
+        font-size: 3rem;
     }
 }
 
@@ -550,20 +478,6 @@ body {
 
 [dir="rtl"] .service-details {
     text-align: right;
-}
-
-[dir="rtl"] .pricing-card ul {
-    text-align: right;
-}
-
-[dir="rtl"] .pricing-card li {
-    padding-left: 0;
-    padding-right: 25px;
-}
-
-[dir="rtl"] .pricing-card li::before {
-    left: auto;
-    right: 0;
 }
 
 /* Smooth Scrolling */
@@ -584,9 +498,7 @@ html {
 }
 
 .service-card,
-.comparison-item,
 .brand-item,
-.pricing-card,
 .contact-item {
     animation: fadeInUp 0.6s ease forwards;
 }
